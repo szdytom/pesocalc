@@ -1,31 +1,29 @@
-(function() {
+module.exports = function() {
 
-function ArithmeticsNode(o, a) {
-    this.operator = o;
-    this.operated = a;
+function CallFuncMark(n, a) {
+    this.func_name = n;
+    this.arg_count = a;
 }
-ArithmeticsNode.prototype.type = "arithmetics";
-this.ArithmeticsNode = ArithmeticsNode;
+CallFuncMark.prototype.type = "call-function";
+this.CallFuncMark = CallFuncMark;
 
-function VariableNode(name) {
+function VariableMark(name) {
     this.name = name;
 }
-VariableNode.prototype.type = "variable";
-this.VariableNode = VariableNode;
+VariableMark.prototype.type = "variable";
+this.VariableMark = VariableMark;
 
-function CallFuncNode(n, a) {
-    this.name = n;
-    this.arg = a;
+function BinOperatorMark(s) {
+    this.symbol = s;
 }
-CallFuncNode.prototype.type = "call-function";
-this.CallFuncNode = CallFuncNode;
+BinOperatorMark.prototype.type = "bin-operator";
+this.BinOperatorMark = BinOperatorMark;
 
-function AssignmentNode(target, source) {
-    this.target = target;
-    this.value = source;
+function AssignmentMark(target) {
+    this.target_name = target;
 }
-AssignmentNode.prototype.type = "assignment";
-this.AssignmentNode = AssignmentNode;
+AssignmentMark.prototype.type = "assignment";
+this.AssignmentMark = AssignmentMark;
 
 function FuncValue(a, c) {
     this.arg_name = a;
@@ -34,4 +32,4 @@ function FuncValue(a, c) {
 FuncValue.prototype.type = "function-value";
 this.FuncValue = FuncValue;
 
-})();
+};

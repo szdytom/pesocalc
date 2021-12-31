@@ -1,7 +1,5 @@
 {
-
-require("./types.js");
-
+require("./types.js")();
 }
 
 start
@@ -10,23 +8,23 @@ start
   / additive
 
 qfunc_assign
-  = target:identifier "(x)" _"="_ expr:additive { return new AssignmentNode(target, new FuncValue(["x"], expr)); }
+  = target:identifier "(x)" _"="_ expr:additive { return [new FuncValue(["x"], expr), new AssignmentMark(target)]; }
 
 assignment
-  = target:identifier _"="_ value:additive { return new AssignmentNode(target, value); }
+  = target:identifier _"="_ value:additive { return value.concat([new AssignmentMark(target)]); }
 
 additive
-  = left:multiplicative _"+"_ right:additive { return new ArithmeticsNode("+", [left, right]) }
-  / left:multiplicative _"-"_ right:additive { return new ArithmeticsNode("-", [left, right]) }
+  = left:multiplicative _"+"_ right:additive { return left.concat(right).concat([new BinOperatorMark("+")]); }
+  / left:multiplicative _"-"_ right:additive { return left.concat(right).concat([new BinOperatorMark("-")]); }
   / multiplicative
 
 multiplicative
-  = left:primary _"*"_ right:multiplicative { return new ArithmeticsNode("*", [left, right]) }
-  / left:primary _"/"_ right:multiplicative { return new ArithmeticsNode("/", [left, right]) }
+  = left:primary _"*"_ right:multiplicative { return left.concat(right).concat([new BinOperatorMark("*")]); }
+  / left:primary _"/"_ right:multiplicative { return left.concat(right).concat([new BinOperatorMark("/")]);  }
   / primary
 
 call_function
-  = name:identifier "(" arg:arg_list? ")" { return new CallFuncNode(name, arg); }
+  = name:identifier "(" arg:arg_list? ")" { return arg.flat().concat([new CallFuncMark(name, arg.length)]); }
 
 arg_list
   = arg1:(primary ",")*arg2:primary { return arg1.map(v => v[0] /* remove "," */).concat(arg2) }
@@ -34,14 +32,14 @@ arg_list
 primary
   = integer
   / call_function
-  / name:identifier { return new VariableNode(name); }
+  / name:identifier { return [new VariableMark(name)]; }
   / _"("_ additive:additive _")"_ { return additive; }
 
 identifier
-  = name:([a-zA-Z_][a-zA-Z_0-9]*) { return name.flat().join(""); }
+  = name:([a-zA-Z_][a-zA-Z_0-9]*) { return [name.flat().join("")]; }
 
 integer
-  = "0x" digits:[0-9a-f]+ { return parseInt(digits.join(""), 16); }
-  / digits:[0-9]+ { return parseInt(digits.join(""), 10); } 
+  = "0x" digits:[0-9a-f]+ { return [parseInt(digits.join(""), 16)]; }
+  / digits:[0-9]+ { return [parseInt(digits.join(""), 10)]; } 
 _
   = [\r\n\t ]*

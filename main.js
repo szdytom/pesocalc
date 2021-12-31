@@ -1,5 +1,9 @@
-const lexi = require('./lexi/main.js')
+const lexi = require("./lexi/main.js");
+const run = require(".//run/main.js");
 
-const test = "A(x)=2 * (3 + 4) + 0xa5 + x4/ 2 - add(2,3,4)";
+const tests = ["f(x)=x*x+x", "A=f(5)/2", "A-1"];
+let env = new run.Environment();
 
-console.log(JSON.stringify(lexi.parse(test)));
+for (let test of tests) {
+	console.log(run.run_expr(env, lexi.parse(test)));
+}

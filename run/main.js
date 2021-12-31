@@ -22,6 +22,11 @@ Environment.prototype.get_var = function(name) {
 };
 
 function run_function(env, f, args) {
+	if (typeof f == "function") {
+		// native function
+		return f.apply(undefined, args);
+	}
+
 	if (f.type != "function-value") {
 		console.log("Not running a function!");
 		return null;

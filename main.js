@@ -1,9 +1,24 @@
 const lexi = require("./lexi/main.js");
 const run = require(".//run/main.js");
 
-const tests = ["f(x)=x*x+x", "A=f(5)/2", "A-1"];
 let env = new run.Environment();
 
-for (let test of tests) {
-	console.log(run.run_expr(env, lexi.parse(test)));
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+
+function run_line(expr) {
+    let at = lexi.parse(expr);
+    console.log(at);
+    return run.run_expr(env, at);
 }
+
+function loop() {
+    readline.question(`peso> `, expr => {
+        console.log(run_line(expr));
+        loop();
+    });
+}
+
+loop();

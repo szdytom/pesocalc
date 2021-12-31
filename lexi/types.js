@@ -27,11 +27,11 @@ function AssignmentNode(target, source) {
 AssignmentNode.prototype.type = "assignment";
 this.AssignmentNode = AssignmentNode;
 
-function FuncValueNode(a, c) {
+function FuncValue(a, c) {
     this.arg_name = a;
     this.content = c;
 }
-FuncValueNode.prototype.type = "function-value";
-this.FuncValueNode = FuncValueNode;
+FuncValue.prototype.type = "function-value";
+this.FuncValue = FuncValue;
 
 })();

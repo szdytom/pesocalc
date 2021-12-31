@@ -10,7 +10,7 @@ start
   / additive
 
 qfunc_assign
-  = target:identifier "(x)" _"="_ expr:additive { return new AssignmentNode(target, new FuncValueNode(["x"], expr)); }
+  = target:identifier "(x)" _"="_ expr:additive { return new AssignmentNode(target, new FuncValue(["x"], expr)); }
 
 assignment
   = target:identifier _"="_ value:additive { return new AssignmentNode(target, value); }

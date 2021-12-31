@@ -1,5 +1,5 @@
 const lexi = require("./lexi/main.js");
-const run = require(".//run/main.js");
+const run = require("./run/main.js");
 
 let env = new run.Environment();
 

@@ -1,5 +1,4 @@
 const builtin = require("../lib/main.js");
-require("../lexi/types.js")();
 
 function Environment() {
 	this.globals = {};

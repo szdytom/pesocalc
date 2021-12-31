@@ -10,7 +10,6 @@ const readline = require('readline').createInterface({
 
 function run_line(expr) {
     let at = lexi.parse(expr);
-    console.log(at);
     return run.run_expr(env, at);
 }
 
